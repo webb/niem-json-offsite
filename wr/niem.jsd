@@ -4,7 +4,7 @@
         "nc:PersonType" : {
             "type" : "object",
             "properties" : {
-                "nc:PersonFullName" : {},
+                "nc:PersonFullName" : { },
                 "nc:PersonHairColorText" : {},
                 "nc:PersonAgeMeasure" : {}
             },

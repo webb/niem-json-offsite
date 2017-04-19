@@ -1,0 +1,59 @@
+{
+    "properties" : {
+        "nc:Person": {
+            "namespace": "Core",
+            "namespacePrefix": "nc",
+            "description": "A human being.",
+            "$ref": "#/definitions/nc:PersonType"
+        },
+        "nc:PersonAgeMeasure": {
+            "namespace": "Core",
+            "namespacePrefix": "nc",
+            "description": "A measurement of the age of a person.",
+            "$ref": "#/definitions/nc:MeasureType"
+        },
+    },
+    "definitions" : {
+        "component_not_selected" : {
+            "documentation" : "This component was not selected, so the content model is empty. Please add the component and generate a new schema to validate this component",
+            "properties" : null,
+            "additionalProperties" : false
+        },
+        "nc:PersonType" : {
+            "description": "A data type for a human being.",
+            "type": "object",
+            "properties": {
+                "nc:PersonAccentText": { "$ref" : "#/definitions/component_not_selected" },
+                "nc:PersonAgeDescriptionText": { },
+                "nc:PersonAgeMeasure": {
+                    "oneOf" : [ { "$ref": "#/definitions/nc:MeasureType" },
+                                { "type" : "array",
+                                  "items" : { "$ref": "#/definitions/nc:MeasureType" }}]
+                },
+                "nc:PersonBirthDate": { },
+                "nc:PersonBirthLocation": { },
+                "nc:PersonBloodType": { },
+                "nc:PersonBodyXRaysAvailable": { },
+                "nc:PersonBuild": { },
+                "nc:PersonCapability": { }
+            }
+        },
+        "nc:MeasureType": {
+            "namespace": "Core",
+            "namespacePrefix": "nc",
+            "description": "A data type for a measurement.",
+            "type": "object",
+            "properties": {
+                "nc:MeasureCommentText": { },
+                "nc:MeasureDate": { },
+                "nc:MeasureError": { },
+                "nc:MeasureEstimatedIndicator": { },
+                "nc:MeasureMethodText": { },
+                "nc:MeasureUnit": { },
+                "nc:MeasureValue": { },
+                "nc:Measurer": { }
+            }
+        },
+
+    }
+}
