@@ -1,10 +1,26 @@
 <?xml version="1.0" encoding="US-ASCII"?>
-<nc:Vehicle xmlns:nc="http://release.niem.gov/niem/niem-core/3.0/">
+<nc:Vehicle
+  xmlns:j="http://release.niem.gov/niem/domains/jxdm/5.2/"
+  xmlns:nc="http://release.niem.gov/niem/niem-core/3.0/">
   <nc:ItemValue>
     <nc:ItemValueAmount>
       <nc:Amount>3200</nc:Amount>
       <nc:CurrencyCode>USD</nc:CurrencyCode>
     </nc:ItemValueAmount>
   </nc:ItemValue>
-    
+  <nc:ItemValue>
+    <nc:ItemValueAmount>
+      <nc:Amount>2506.64</nc:Amount>
+      <nc:CurrencyCode>GBP</nc:CurrencyCode>
+    </nc:ItemValueAmount>
+  </nc:ItemValue>
+  <nc:ItemValue>
+    <nc:ItemValueAmount>
+      <nc:Amount>2989.15</nc:Amount>
+      <nc:CurrencyCode>EUR</nc:CurrencyCode>
+    </nc:ItemValueAmount>
+  </nc:ItemValue>
+  <j:VehicleUseANSID20Code>01</j:VehicleUseANSID20Code>
+  <j:VehicleMakeCode>FORD</j:VehicleMakeCode>
+  <nc:VehicleSeatingQuantity>5</nc:VehicleSeatingQuantity>
 </nc:Vehicle>

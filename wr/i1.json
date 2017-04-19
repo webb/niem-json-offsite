@@ -1,7 +1,13 @@
 {
-    "nc:Person" : {
-        "nc:PersonFullName" : "Homer Simpson",
-        "nc:PersonHairColorText" : "Bald",
-        "nc:PersonAgeMeasure" : 43
+    "@context": "context.jsonld",
+    "nc:Vehicle": {
+        "nc:ItemValue": [
+            { "nc:Amount": 3200, "nc:CurrencyCode": "USD" },
+            { "nc:Amount": 2506.64, "nc:CurrencyCode": "GBP" },
+            { "nc:Amount": 2989.15, "nc:CurrencyCode": "EUR" }
+        ],
+        "j:VehicleUseANSID20Code": "01",
+        "j:VehicleMakeCode": "FORD",
+        "nc:VehicleSeatingQuantity":  5
     }
 }

@@ -14,7 +14,8 @@
     "type" : "object",
     "additionalProperties" : false,
     "properties" : {
-        "Base" : { "$ref" : "#/definitions/BaseType" },
+        "@context" : "context.jsonld",
+        "nc:Vehicle" : { "$ref" : "#/definitions/nc:VehicleType" },
         "Derived" : { "$ref" : "#/definitions/DerivedType" }
     }
 }
