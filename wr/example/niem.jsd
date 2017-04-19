@@ -3,16 +3,22 @@
     "properties" : {
         "nc:CurrencyCode" : {
             "oneOf" : [
-                { "$ref": "#/definitions/iso_4217:CurrencyCodeType" },
-                { "type" : "array",
-                  "items" : { "$ref": "#/definitions/iso_4217:CurrencyCodeType" } }
+                {
+                    "$ref": "#/definitions/iso_4217:CurrencyCodeType"
+                },
+                {
+                    "type" : "array",
+                    "items" : {
+                        "$ref": "#/definitions/iso_4217:CurrencyCodeType"
+                    }
+                }
             ]
-        }
+        },
         "nc:Vehicle" : {
             "oneOf" : [
-                { "$ref": "#/definitions/nc:VehicleType" },
+                { "$ref" : "#/definitions/nc:VehicleType" },
                 { "type" : "array",
-                  "items" : { "$ref": "#/definitions/nc:VehicleType" } }
+                  "items" : { "$ref" : "#/definitions/nc:VehicleType" } }
             ]
         }            
     },
