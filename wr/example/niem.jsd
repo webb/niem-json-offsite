@@ -15,17 +15,7 @@
       ]
     },
     "nc:Vehicle": {
-      "oneOf": [
-        {
-          "$ref": "#/definitions/nc:VehicleType"
-        },
-        {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/nc:VehicleType"
-          }
-        }
-      ]
+      "$ref": "#/definitions/nc:VehicleType"
     }
   },
   "definitions": {
@@ -45,12 +35,12 @@
       }
     },
     "nc:VehicleType": {
-      "type": "object",
       "allOf": [
         {
           "$ref": "#/definitions/nc:ConveyanceType"
         },
         {
+          "type": "object",
           "properties": {
             "nc:VehicleMake": {
               "$ref": "#/definitions/_not_in_subset"
@@ -63,19 +53,17 @@
       ]
     },
     "nc:ConveyanceType": {
-      "type": "object",
       "allOf": [
         {
           "$ref": "#/definitions/nc:ItemType"
         },
         {
+          "type": "object",
           "properties": {
             "j:VehicleUseANSID20Code": {
               "$ref": "#/definitions/_not_in_subset"
             },
-            "nc:ConveyanceUseText": {
-              "$ref": "#/definitions/_not_in_subset"
-            },
+            "nc:ConveyanceUseText": {},
             "nc:VehicleSeatingQuantity": {
               "$ref": "#/definitions/_not_in_subset"
             }
@@ -87,7 +75,43 @@
       "type": "object"
     },
     "iso_4217:CurrencyCodeType": {
-      "$ref": "#/definitions/_not_in_subset"
+      "oneOf": [
+        {
+          "$ref": "#/definitions/iso_4217:CurrencyCodeSimpleType"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "rdf:value": {
+              "$ref": "#/definitions/iso_4217:CurrencyCodeSimpleType"
+            }
+          }
+        }
+      ]
+    },
+    "iso_4217:CurrencyCodeSimpleType": {
+      "type": "string",
+      "description": "A data type for a currency that qualifies a monetary amount.",
+      "oneOf": [
+        {
+          "enum": [
+            "EUR"
+          ],
+          "description": "Euro"
+        },
+        {
+          "enum": [
+            "GBP"
+          ],
+          "description": "Pound Sterling"
+        },
+        {
+          "enum": [
+            "USD"
+          ],
+          "description": "US Dollar"
+        }
+      ]
     }
   },
   "type": "object",

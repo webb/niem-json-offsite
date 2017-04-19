@@ -15,17 +15,15 @@
             ]
         },
         "nc:Vehicle" : {
-            "oneOf" : [
-                {
+//            "oneOf" : [
+//                {
                     "$ref" : "#/definitions/nc:VehicleType"
-                },
-                {
-                    "type" : "array",
-                    "items" : {
-                        "$ref" : "#/definitions/nc:VehicleType"
-                    }
-                }
-            ]
+//                },
+//                {
+//                    "type" : "array",
+//                    "items" : { "$ref" : "#/definitions/nc:VehicleType" }
+//                }
+//            ]
         },
     },
     "definitions" : {
@@ -49,10 +47,10 @@
             }
         },
         "nc:VehicleType" : {
-            "type" : "object",
             "allOf" : [
                 { "$ref" : "#/definitions/nc:ConveyanceType" },
                 {
+                    type : object
                     "properties" : {
                         "nc:VehicleMake" : { "$ref" : "#/definitions/_not_in_subset" }
                         "nc:VehicleSeatingQuantity" : { "$ref" : "#/definitions/_not_in_subset" }
@@ -62,9 +60,7 @@
         },
         "nc:ConveyanceType" : {
             "allOf" : [
-                {
-                    "$ref" : "#/definitions/nc:ItemType"
-                },
+                { "$ref" : "#/definitions/nc:ItemType" },
                 {
                     type: object
                     "properties" : {
@@ -72,7 +68,8 @@
                             "$ref" : "#/definitions/_not_in_subset"
                         },
                         "nc:ConveyanceUseText" : {
-                            "$ref" : "#/definitions/_not_in_subset"
+                            // ZZZZZ
+                            // "$ref" : "#/definitions/_not_in_subset"
                         },
                         "nc:VehicleSeatingQuantity" : {
                             "$ref" : "#/definitions/_not_in_subset"
@@ -86,14 +83,25 @@
             // allof: [ { $ref : "
         },
         "iso_4217:CurrencyCodeType" : {
-            allOf : [
-                $ref : #/definitions/iso_4217:CurrencyCodeSimpleType
+            oneOf : [
+                { "$ref" : "#/definitions/iso_4217:CurrencyCodeSimpleType" }
+                { type: object
+                  properties: {
+                      "rdf:value" : {
+                          "$ref" : "#/definitions/iso_4217:CurrencyCodeSimpleType"
+                      }
+                  }
+                }
             ]
         }
         "iso_4217:CurrencyCodeSimpleType" : {
+            type: string
             description : "A data type for a currency that qualifies a monetary amount."
-            enum : [
-                { enum
+            oneOf : [
+                { enum: [ "EUR" ], description: "Euro" }
+                { enum: [ "GBP" ], description: "Pound Sterling" }
+                { enum: [ "USD" ], description: "US Dollar" }
+            ]
         }
     },
     "type" : "object",
