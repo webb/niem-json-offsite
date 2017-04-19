@@ -1,0 +1,60 @@
+{
+  "definitions": {
+    "cyfs:PersonOtherKinAssociationType": {
+      "type": "object",
+      "required": [ "cyfs:SourcePerson","cyfs:TargetPerson","cyfs:PersonOtherKinAssociationCategoryCode" ],
+      "additionalProperties": false,
+      "properties": {
+        "cyfs:SourcePerson": { "$ref": "nc.jsd#/definitions/nc:PersonType" },
+        "cyfs:TargetPerson": { "$ref": "nc.jsd#/definitions/nc:PersonType" },
+        "cyfs:PersonOtherKinAssociationCategoryCode": { "$ref": "#/definitions/cyfs:PersonOtherKinAssociationCodeType" }
+      }
+    },
+    "cyfs:PersonOtherKinAssociationCodeType": {
+      "type": "string",
+      "enum": [
+        "Brother",
+        "Brother-In-Law",
+        "Clergy",
+        "Coach",
+        "Domestic Partner",
+        "Father-in-Law",
+        "Fiance",
+        "Fiancee",
+        "Fictive Kin",
+        "Godfather",
+        "Godmother",
+        "Granddaughter",
+        "Grandson",
+        "Great-Granddaughter",
+        "Great-Grandson",
+        "Maternal Aunt",
+        "Maternal Female Cousin",
+        "Maternal Grandfather",
+        "Maternal Grandmother",
+        "Maternal Great Grandfather",
+        "Maternal Great Grandmother",
+        "Maternal Male Cousin",
+        "Maternal Uncle",
+        "Mother-in-Law",
+        "Neighbor",
+        "Nephew",
+        "Niece",
+        "Paternal Aunt",
+        "Paternal Female Cousin",
+        "Paternal Grandfather",
+        "Paternal Grandmother",
+        "Paternal Great Grandfather",
+        "Paternal Great Grandmother",
+        "Paternal Male Cousin",
+        "Paternal Uncle",
+        "Roommate",
+        "Significant Other",
+        "Sister",
+        "Sister-In-Law",
+        "Teacher",
+        "Unrelated Friend"
+      ]
+    }
+  }
+}

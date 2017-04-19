@@ -1,0 +1,23 @@
+{
+  "definitions": {
+    "ncic:HAICodeType": {
+      "type": "string",
+      "oneOf" : [
+        { "enum": [ "BLD" ], "description": "Bald" },
+        { "enum": [ "BLK" ], "description": "Black" },
+        { "enum": [ "BLN" ], "description": "Blond or Strawberry" },
+        { "enum": [ "BLU" ], "description": "Blue" },
+        { "enum": [ "BRO" ], "description": "Brown" },
+        { "enum": [ "GRN" ], "description": "Green" },
+        { "enum": [ "GRY" ], "description": "Gray or Partially Grey" },
+        { "enum": [ "ONG" ], "description": "Orange" },
+        { "enum": [ "PLE" ], "description": "Purple" },
+        { "enum": [ "PNK" ], "description": "Pink" },
+        { "enum": [ "RED" ], "description": "Red" },
+        { "enum": [ "SDY" ], "description": "Sandy" },
+        { "enum": [ "WHI" ], "description": "White" },
+        { "enum": [ "XXX" ], "description": "Unknown or Completely Bald" }
+      ]
+    }
+  }
+}

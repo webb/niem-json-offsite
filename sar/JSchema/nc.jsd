@@ -1,0 +1,35 @@
+{
+  "definitions": {
+    "nc:PersonType": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "nc:PersonAgeMeasure": { },
+        "j:PersonHairColorCode": { "$ref": "ncic.jsd#/definitions/ncic:HAICodeType" },
+        "nc:PersonName": { "$ref": "#/definitions/nc:PersonNameType" }
+      }
+    },
+    "nc:PersonNameType": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "nc:PersonGivenName": { "$ref": "#/definitions/nc:PersonNameTextType" },
+        "nc:PersonSurName": { "$ref": "#/definitions/nc:PersonNameTextType" },
+        "nc:PersonNameSuffixText": { "$ref": "#/definitions/nc:TextType" },
+        "nc:PersonPreferredName": { "$ref": "#/definitions/nc:TextType" }
+      }
+    },
+    "nc:PersonNameTextType": {
+      "type": ["array","string"],
+      "items": {
+        "type": "string"
+      }
+    },
+    "nc:TextType": {
+      "type": ["array","string"],
+      "items": {
+        "type": "string"
+      }
+    } 
+  }
+}
