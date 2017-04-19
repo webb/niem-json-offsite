@@ -1,0 +1,9 @@
+{
+  "nc:Vehicle": {
+    "j:VehicleUseANSID20Code": [
+      "01",
+      "02",
+      "03"
+    ]
+  }
+}

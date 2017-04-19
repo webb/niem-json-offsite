@@ -26,13 +26,19 @@
           }
         }
       ]
-    },
-    "j:VehicleUseANSID20Code": {}
+    }
   },
   "definitions": {
+    "_not_in_subset": {
+      "title": "Property not included in the subset",
+      "description": "The property that referenced this definition is not included in the subset. If you wish to use this property, add the property to the subset and generate a new JSON Schema.",
+      "type": "null"
+    },
     "nc:AmountType": {
       "properties": {
-        "nc:Amount": {},
+        "nc:Amount": {
+          "$ref": "#/definitions/_not_in_subset"
+        },
         "nc:CurrencyCode": {
           "$ref": "#/properties/nc:CurrencyCode"
         }
@@ -46,8 +52,12 @@
         },
         {
           "properties": {
-            "nc:VehicleMake": {},
-            "nc:VehicleSeatingQuantity": {}
+            "nc:VehicleMake": {
+              "$ref": "#/definitions/_not_in_subset"
+            },
+            "nc:VehicleSeatingQuantity": {
+              "$ref": "#/definitions/_not_in_subset"
+            }
           }
         }
       ]
@@ -61,16 +71,24 @@
         {
           "properties": {
             "j:VehicleUseANSID20Code": {
-              "$ref": "#/properties/j:VehicleUseANSID20Code"
+              "$ref": "#/definitions/_not_in_subset"
             },
-            "nc:ConveyanceUseText": {},
-            "nc:VehicleSeatingQuantity": {}
+            "nc:ConveyanceUseText": {
+              "$ref": "#/definitions/_not_in_subset"
+            },
+            "nc:VehicleSeatingQuantity": {
+              "$ref": "#/definitions/_not_in_subset"
+            }
           }
         }
       ]
     },
-    "nc:ItemType": {},
-    "iso_4217:CurrencyCodeType": {}
+    "nc:ItemType": {
+      "type": "object"
+    },
+    "iso_4217:CurrencyCodeType": {
+      "$ref": "#/definitions/_not_in_subset"
+    }
   },
   "type": "object",
   "additionalProperties": false

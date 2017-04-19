@@ -27,15 +27,21 @@
                 }
             ]
         },
-        "j:VehicleUseANSID20Code" : {
-            // ZZZZZ
-        },
     },
     "definitions" : {
+        "_not_in_subset" : {
+            "title" : "Property not included in the subset",
+            "description" : "The property that referenced this definition is not included in the subset. If you wish to use this property, add the property to the subset and generate a new JSON Schema."
+            "type" : "null"
+            // "allOf" : [
+            //    { "enum" : [ "true" ] },
+            //    { "enum" : [ "false" ] }
+            //]
+        },
         "nc:AmountType" : {
             "properties" : {
                 "nc:Amount" : {
-                    // empty
+                    "$ref" : "#/definitions/_not_in_subset"
                 },
                 "nc:CurrencyCode" : {
                     "$ref" : "#/properties/nc:CurrencyCode"
@@ -45,47 +51,49 @@
         "nc:VehicleType" : {
             "type" : "object",
             "allOf" : [
-                {
-                    "$ref" : "#/definitions/nc:ConveyanceType"
-                },
+                { "$ref" : "#/definitions/nc:ConveyanceType" },
                 {
                     "properties" : {
-                        "nc:VehicleMake" : {
-                            // ZZZZZ
-                        },
-                        "nc:VehicleSeatingQuantity" : {
-                            // ZZZZZ
-                        }
+                        "nc:VehicleMake" : { "$ref" : "#/definitions/_not_in_subset" }
+                        "nc:VehicleSeatingQuantity" : { "$ref" : "#/definitions/_not_in_subset" }
                     }
                 }
             ]
         },
         "nc:ConveyanceType" : {
-            "type" : "object",
             "allOf" : [
                 {
                     "$ref" : "#/definitions/nc:ItemType"
                 },
                 {
+                    type: object
                     "properties" : {
                         "j:VehicleUseANSID20Code" : {
-                            "$ref" : "#/properties/j:VehicleUseANSID20Code"
+                            "$ref" : "#/definitions/_not_in_subset"
                         },
                         "nc:ConveyanceUseText" : {
-                            // ZZZZZ
+                            "$ref" : "#/definitions/_not_in_subset"
                         },
                         "nc:VehicleSeatingQuantity" : {
-                            // ZZZZZ
+                            "$ref" : "#/definitions/_not_in_subset"
                         }
                     }
                 }
             ]
         },
         "nc:ItemType" : {
-            // ZZZZZ
+            type: object
+            // allof: [ { $ref : "
         },
         "iso_4217:CurrencyCodeType" : {
-            // ZZZZZ
+            allOf : [
+                $ref : #/definitions/iso_4217:CurrencyCodeSimpleType
+            ]
+        }
+        "iso_4217:CurrencyCodeSimpleType" : {
+            description : "A data type for a currency that qualifies a monetary amount."
+            enum : [
+                { enum
         }
     },
     "type" : "object",
