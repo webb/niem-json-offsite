@@ -1,0 +1,20 @@
+{
+    "$schema" : "http://json-schema.org/draft-04/schema#",
+    "definitions" : {
+        "nc:PersonType" : {
+            "type" : "object",
+            "properties" : {
+                "nc:PersonFullName" : {},
+                "nc:PersonHairColorText" : {},
+                "nc:PersonAgeMeasure" : {}
+            },
+            "required" : [ "nc:PersonFullName" ]
+        }
+    },
+    "type" : "object",
+    "additionalProperties" : false,
+    "properties" : {
+        "Base" : { "$ref" : "#/definitions/BaseType" },
+        "Derived" : { "$ref" : "#/definitions/DerivedType" }
+    }
+}

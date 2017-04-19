@@ -1,0 +1,7 @@
+{
+    "nc:Person" : {
+        "nc:PersonFullName" : "Homer Simpson",
+        "nc:PersonHairColorText" : "Bald",
+        "nc:PersonAgeMeasure" : 43
+    }
+}
