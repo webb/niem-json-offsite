@@ -16,38 +16,69 @@
         },
         "nc:Vehicle" : {
             "oneOf" : [
-                { "$ref" : "#/definitions/nc:VehicleType" },
-                { "type" : "array",
-                  "items" : { "$ref" : "#/definitions/nc:VehicleType" } }
+                {
+                    "$ref" : "#/definitions/nc:VehicleType"
+                },
+                {
+                    "type" : "array",
+                    "items" : {
+                        "$ref" : "#/definitions/nc:VehicleType"
+                    }
+                }
             ]
         }            
     },
     "definitions" : {
         "nc:AmountType" : {
             "properties" : {
-                "nc:Amount" : {},
-                "nc:CurrencyCode" : { "$ref" : "#/properties/nc:CurrencyCode" }
+                "nc:Amount" : {
+                },
+                "nc:CurrencyCode" : {
+                    "$ref" : "#/properties/nc:CurrencyCode"
+                }
             }
         },
         "nc:VehicleType" : {
             "type" : "object",
             "allOf" : [
-                { "$ref" : "#/definitions/nc:ConveyanceType" },
-                { "properties" : [
-                    "nc:VehicleMake" : { "$ref" : "#/properties/nc:VehicleMake" },
-                    "nc:VehicleSeatingQuantity" : { "$ref" : "#/properties/nc:VehicleSeatingQuantity" }]}]
+                {
+                    "$ref" : "#/definitions/nc:ConveyanceType"
+                },
+                {
+                    "properties" : {
+                        "nc:VehicleMake" : {
+                            "$ref" : "#/properties/nc:VehicleMake"
+                        },
+                        "nc:VehicleSeatingQuantity" : {
+                            "$ref" : "#/properties/nc:VehicleSeatingQuantity"
+                        }
+                    }
+                }
+            ]
         },
         "nc:ConveyanceType" : {
             "type" : "object",
             "allOf" : [
-                { "$ref" : "#/definitions/nc:ItemType" },
-                { "properties" : [
-                    "j:VehicleUseANSID20Code" : { "$ref" : "#/properties/j:VehicleUseANSID20Code" },
-                    "nc:ConveyanceUseText" : { "$ref" : "#/properties/nc:ConveyanceUseText" },
-                    "nc:VehicleSeatingQuantity" : { "$ref" : "#/properties/nc:VehicleSeatingQuantity" }]}]
+                {
+                    "$ref" : "#/definitions/nc:ItemType"
+                },
+                {
+                    "properties" : {
+                        "j:VehicleUseANSID20Code" : {
+                            "$ref" : "#/properties/j:VehicleUseANSID20Code"
+                        },
+                        "nc:ConveyanceUseText" : {
+                            "$ref" : "#/properties/nc:ConveyanceUseText"
+                        },
+                        "nc:VehicleSeatingQuantity" : {
+                            "$ref" : "#/properties/nc:VehicleSeatingQuantity"
+                        }
+                    }
+                }
+            ]
         },
-        "iso_4217:CurrencyCodeType" : {},
+        "iso_4217:CurrencyCodeType" : { }
     },
     "type" : "object",
-    "additionalProperties" : false,
+    "additionalProperties" : false
 }
