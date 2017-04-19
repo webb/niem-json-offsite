@@ -1,6 +1,19 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
   "properties": {
+    "j:VehicleUseANSID20Code": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/aamva_d20:VehicleUseCodeType"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/aamva_d20:VehicleUseCodeType"
+          }
+        }
+      ]
+    },
     "nc:CurrencyCode": {
       "oneOf": [
         {
@@ -15,7 +28,17 @@
       ]
     },
     "nc:Vehicle": {
-      "$ref": "#/definitions/nc:VehicleType"
+      "oneOf": [
+        {
+          "$ref": "#/definitions/nc:VehicleType"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/nc:VehicleType"
+          }
+        }
+      ]
     }
   },
   "definitions": {
@@ -61,9 +84,11 @@
           "type": "object",
           "properties": {
             "j:VehicleUseANSID20Code": {
+              "$ref": "#/properties/j:VehicleUseANSID20Code"
+            },
+            "nc:VehicleUseText": {
               "$ref": "#/definitions/_not_in_subset"
             },
-            "nc:ConveyanceUseText": {},
             "nc:VehicleSeatingQuantity": {
               "$ref": "#/definitions/_not_in_subset"
             }
@@ -72,7 +97,8 @@
       ]
     },
     "nc:ItemType": {
-      "type": "object"
+      "type": "object",
+      "properties": {}
     },
     "iso_4217:CurrencyCodeType": {
       "oneOf": [
@@ -110,6 +136,46 @@
             "USD"
           ],
           "description": "US Dollar"
+        }
+      ]
+    },
+    "aamva_d20:VehicleUseCodeType": {
+      "description": "A data type for ways in which a vehicle is used.",
+      "oneOf": [
+        {
+          "$ref": "#/definitions/aamva_d20:VehicleUseCodeSimpleType"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "rdf:value": {
+              "$ref": "#/definitions/aamva_d20:VehicleUseCodeSimpleType"
+            }
+          }
+        }
+      ]
+    },
+    "aamva_d20:VehicleUseCodeSimpleType": {
+      "type": "string",
+      "description": "A data type for ways in which a vehicle is used.",
+      "oneOf": [
+        {
+          "enum": [
+            "01"
+          ],
+          "description": "Personal"
+        },
+        {
+          "enum": [
+            "02"
+          ],
+          "description": "Driver Training"
+        },
+        {
+          "enum": [
+            "03"
+          ],
+          "description": "Construction/Maintenance"
         }
       ]
     }

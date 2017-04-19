@@ -1,3 +1,5 @@
 {
-  "nc:Vehicle": {}
+  "nc:Vehicle": {
+    "nc:ConveyanceUseText": ""
+  }
 }

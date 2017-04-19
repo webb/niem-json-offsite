@@ -1,0 +1,8 @@
+{
+    // vehicle can be an array
+    "nc:Vehicle" : [
+        { "nc:ConveyanceUseText" : "one" }
+        { "nc:ConveyanceUseText" : "two" }
+        { "nc:ConveyanceUseText" : "three" }
+    ]
+}
