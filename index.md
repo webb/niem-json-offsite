@@ -35,6 +35,20 @@ A developer that extends a JSON Schema will do so in their own separate, local
 JSON Schema document, and reference the NIEM JSON Schema document, so the
 top-level JSON Schema object wouldn't be what the instance is validated against.
 
+#### "properties" of the top-level JSON Schema object
+
+The "properties" in the top-level JSON Schema object contains zero-to-unbounded
+definitions of all the elements in the model. This means that they use an idiom
+that defines a property as a single value **or** an array of values. 
+
+Any other cardinality would be done locally, within a type, and might express
+cardinality of an element within that type.
+
+#### "definitions" of the top-level JSON Schema object
+
+The "definitions" in the top-level JSON Schema object contains type definitions
+for all the types in the subset.
+
 ### Documented enumerations
 
 Enumerations may be documented in JSON Schema by combining "oneOf" and single-item "enum" keywords.
@@ -50,20 +64,6 @@ Enumerations may be documented in JSON Schema by combining "oneOf" and single-it
 ```
 
 From [ncic.jsd](sar/JSchema/ncic.jsd) in [Scott's JSchema folder](sar/JSchema).
-
-#### "properties" of the top-level JSON Schema object
-
-The "properties" in the top-level JSON Schema object contains zero-to-unbounded
-definitions of all the elements in the model. This means that they use an idiom
-that defines a property as a single value **or** an array of values. 
-
-Any other cardinality would be done locally, within a type, and might express
-cardinality of an element within that type.
-
-#### "definitions" of the top-level JSON Schema object
-
-The "definitions" in the top-level JSON Schema object contains type definitions
-for all the types in the subset.
 
 ### Element declarations
 
