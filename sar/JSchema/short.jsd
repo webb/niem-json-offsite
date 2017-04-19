@@ -1,0 +1,10 @@
+{
+  "title": "Short example schema",
+  "type": "object",
+  "required": [ "@context","cyfs:PersonOtherKinAssociation" ],
+  "additionalProperties": false,
+  "properties": {
+    "@context": {},
+    "cyfs:PersonOtherKinAssociation": { "$ref": "cyfs.jsd#/definitions/cyfs:PersonOtherKinAssociationType" }
+  }
+}

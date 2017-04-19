@@ -27,4 +27,21 @@ hide data definitions. Put definitions of types and other reusable things there.
 ## JSON Schema patterns and conventions
 
 
+### Documented enumerations
+
+Enumerations may be documented in JSON Schema by combining "oneOf" and single-item "enum" keywords.
+
+```json
+    "ncic:HAICodeType": {
+      "type": "string",
+      "oneOf" : [
+        { "enum": [ "BLD" ], "description": "Bald" },
+        { "enum": [ "BLK" ], "description": "Black" },
+        ...
+    }
+```
+
+From [ncic.jsd](sar/JSchema/ncic.jsd) in [Scott's JSchema folder](sar/JSchema).
+
+
 

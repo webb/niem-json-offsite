@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"> 
+
+    <xs:import namespace="http://release.niem.gov/niem/domains/jxdm/5.2/" schemaLocation="niem/domains/jxdm/5.2/jxdm.xsd"/>
+    <xs:import namespace="http://release.niem.gov/niem/domains/cyfs/3.2/" schemaLocation="niem/domains/cyfs/3.2/cyfs.xsd"/>       
+    
+</xs:schema>
