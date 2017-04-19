@@ -1,0 +1,93 @@
+{
+    "$schema" : "http://json-schema.org/draft-04/schema#",
+    "properties" : {
+        "nc:CurrencyCode" : {
+            "oneOf" : [
+                {
+                    "$ref": "#/definitions/iso_4217:CurrencyCodeType"
+                },
+                {
+                    "type" : "array",
+                    "items" : {
+                        "$ref": "#/definitions/iso_4217:CurrencyCodeType"
+                    }
+                }
+            ]
+        },
+        "nc:Vehicle" : {
+            "oneOf" : [
+                {
+                    "$ref" : "#/definitions/nc:VehicleType"
+                },
+                {
+                    "type" : "array",
+                    "items" : {
+                        "$ref" : "#/definitions/nc:VehicleType"
+                    }
+                }
+            ]
+        },
+        "j:VehicleUseANSID20Code" : {
+            // ZZZZZ
+        },
+    },
+    "definitions" : {
+        "nc:AmountType" : {
+            "properties" : {
+                "nc:Amount" : {
+                    // empty
+                },
+                "nc:CurrencyCode" : {
+                    "$ref" : "#/properties/nc:CurrencyCode"
+                }
+            }
+        },
+        "nc:VehicleType" : {
+            "type" : "object",
+            "allOf" : [
+                {
+                    "$ref" : "#/definitions/nc:ConveyanceType"
+                },
+                {
+                    "properties" : {
+                        "nc:VehicleMake" : {
+                            // ZZZZZ
+                        },
+                        "nc:VehicleSeatingQuantity" : {
+                            // ZZZZZ
+                        }
+                    }
+                }
+            ]
+        },
+        "nc:ConveyanceType" : {
+            "type" : "object",
+            "allOf" : [
+                {
+                    "$ref" : "#/definitions/nc:ItemType"
+                },
+                {
+                    "properties" : {
+                        "j:VehicleUseANSID20Code" : {
+                            "$ref" : "#/properties/j:VehicleUseANSID20Code"
+                        },
+                        "nc:ConveyanceUseText" : {
+                            // ZZZZZ
+                        },
+                        "nc:VehicleSeatingQuantity" : {
+                            // ZZZZZ
+                        }
+                    }
+                }
+            ]
+        },
+        "nc:ItemType" : {
+            // ZZZZZ
+        },
+        "iso_4217:CurrencyCodeType" : {
+            // ZZZZZ
+        }
+    },
+    "type" : "object",
+    "additionalProperties" : false
+}
