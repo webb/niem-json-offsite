@@ -1,6 +1,22 @@
 {
     "$schema" : "http://json-schema.org/draft-04/schema#",
+    "properties" : {
+        "nc:CurrencyCode" : {
+            "oneOf" : [
+                { "$ref": "#/definitions/iso_4217:CurrencyCodeType" },
+                { "type" : "array",
+                  "items" : { "$ref": "#/definitions/iso_4217:CurrencyCodeType" } }
+            ]
+        }
+    },
     "definitions" : {
+        "nc:AmountType" : {
+            "properties" : {
+                "nc:Amount" : 
+                "nc:CurrencyCode" : { "$ref" : "#/properties/nc:CurrencyCode" }
+            }
+        },
+        "iso_4217:CurrencyCodeType" : {},
         "nc:PersonType" : {
             "type" : "object",
             "properties" : {
