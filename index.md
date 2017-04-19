@@ -38,7 +38,7 @@ top-level JSON Schema object wouldn't be what the instance is validated against.
 #### "properties" of the top-level JSON Schema object
 
 The "properties" in the top-level JSON Schema object contains zero-to-unbounded
-definitions of all the elements in the model. This means that they use an idiom
+definitions of all the elements in the subset. This means that they use an idiom
 that defines a property as a single value **or** an array of values. 
 
 Any other cardinality would be done locally, within a type, and might express

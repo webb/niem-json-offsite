@@ -44,10 +44,13 @@
             //]
         },
         "nc:AmountType" : {
+            type : object
+            description : "A data type for an amount of money."
             "properties" : {
                 "nc:Amount" : {
                     "$ref" : "#/definitions/_not_in_subset"
                 },
+                // this is a substitution for nc:Currency
                 "nc:CurrencyCode" : {
                     "$ref" : "#/properties/nc:CurrencyCode"
                 }
@@ -86,6 +89,7 @@
                 }
             ]
         },
+        // ZZZZZ
         "nc:ItemType" : {
             type: object
             properties : {

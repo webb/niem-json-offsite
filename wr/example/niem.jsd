@@ -48,6 +48,8 @@
       "type": "null"
     },
     "nc:AmountType": {
+      "type": "object",
+      "description": "A data type for an amount of money.",
       "properties": {
         "nc:Amount": {
           "$ref": "#/definitions/_not_in_subset"
