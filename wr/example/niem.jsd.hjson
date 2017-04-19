@@ -38,23 +38,44 @@
             "title" : "Property not included in the subset",
             "description" : "The property that referenced this definition is not included in the subset. If you wish to use this property, add the property to the subset and generate a new JSON Schema."
             "type" : "null"
-            // "allOf" : [
-            //    { "enum" : [ "true" ] },
-            //    { "enum" : [ "false" ] }
-            //]
         },
-        "nc:AmountType" : {
+        "_element_is_abstract" : {
+            "title" : "Element is abstract"
+            "description" : "The property represents a NIEM element that is abstract. It appears in this schema for documentation purposes, but is not allowed in JSON documents validated against this schema."
+            "type" : "null"
+        },
+        "structures:ObjectType" : {
             type : object
-            description : "A data type for an amount of money."
-            "properties" : {
-                "nc:Amount" : {
-                    "$ref" : "#/definitions/_not_in_subset"
-                },
-                // this is a substitution for nc:Currency
-                "nc:CurrencyCode" : {
-                    "$ref" : "#/properties/nc:CurrencyCode"
-                }
+            patternProperties : {
+                "^ism:.*" : { type : string }
+                "^ntk:.*" : { type : string }
             }
+            properties : {
+                "@id" : { format : uriref }
+                "@base" : { format : uriref } 
+            }
+        }
+        "nc:AmountType" : {
+            description : "A data type for an amount of money."
+            allOf : [
+                { "$ref" : "#/definitions/structures:ObjectType" }
+                { type : object
+                  "properties" : {
+                      "nc:Amount" : {
+                          description: "An amount of money."
+                          "$ref" : "#/definitions/_not_in_subset"
+                      },
+                      "nc:Currency" : {
+                          description: "A data concept for a unit of money or exchange."
+                          "$ref" : "#/definitions/_element_is_abstract"
+                      }
+                      "nc:CurrencyCode" : {
+                          description: "A unit of money or exchange. Appears as a substitution for nc:Currency."
+                          "$ref" : "#/properties/nc:CurrencyCode"
+                      }
+                  }
+                }
+            ]
         },
         "nc:VehicleType" : {
             "allOf" : [
@@ -98,12 +119,17 @@
         "iso_4217:CurrencyCodeType" : {
             oneOf : [
                 { "$ref" : "#/definitions/iso_4217:CurrencyCodeSimpleType" }
-                { type: object
-                  properties: {
-                      "rdf:value" : {
-                          "$ref" : "#/definitions/iso_4217:CurrencyCodeSimpleType"
-                      }
-                  }
+                {
+                    allOf : [
+                        { "$ref" : "#/definitions/structures:ObjectType" }
+                        { type: object
+                          properties: {
+                              "rdf:value" : {
+                                  "$ref" : "#/definitions/iso_4217:CurrencyCodeSimpleType"
+                              }
+                          }
+                        }
+                    ]
                 }
             ]
         }
