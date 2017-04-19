@@ -9,6 +9,7 @@
   <w:Element w:name="j:VehicleUseANSID20Code" w:isReference="false" w:nillable="true"/>
   <w:Element w:name="nc:CurrencyCode" w:isReference="false" w:nillable="true"/>
   <w:Element w:name="nc:Vehicle" w:isReference="false" w:nillable="true"/>
+  <w:Element w:name="nc:VehicleUseText" w:isReference="false" w:nillable="true"/>
   <w:Type w:name="aamva_d20:VehicleUseCodeSimpleType" w:isRequested="false">
     <w:Facet w:facet="enumeration" w:value="00"/>
     <w:Facet w:facet="enumeration" w:value="01"/>
@@ -219,7 +220,7 @@
   </w:Type>
   <w:Type w:name="nc:ConveyanceType" w:isRequested="false">
     <w:ElementInType w:name="nc:ConveyanceUse" w:isReference="false"
-      w:minOccurs="1" w:maxOccurs="1"/>
+      w:minOccurs="0" w:maxOccurs="unbounded"/>
   </w:Type>
   <w:Type w:name="nc:ItemType" w:isRequested="false">
     <w:ElementInType w:name="nc:ItemValue" w:isReference="false"

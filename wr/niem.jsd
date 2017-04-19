@@ -8,30 +8,40 @@
                   "items" : { "$ref": "#/definitions/iso_4217:CurrencyCodeType" } }
             ]
         }
+        "nc:Vehicle" : {
+            "oneOf" : [
+                { "$ref": "#/definitions/nc:VehicleType" },
+                { "type" : "array",
+                  "items" : { "$ref": "#/definitions/nc:VehicleType" } }
+            ]
+        }            
     },
     "definitions" : {
         "nc:AmountType" : {
             "properties" : {
-                "nc:Amount" : 
+                "nc:Amount" : {},
                 "nc:CurrencyCode" : { "$ref" : "#/properties/nc:CurrencyCode" }
             }
         },
-        "iso_4217:CurrencyCodeType" : {},
-        "nc:PersonType" : {
+        "nc:VehicleType" : {
             "type" : "object",
-            "properties" : {
-                "nc:PersonFullName" : { },
-                "nc:PersonHairColorText" : {},
-                "nc:PersonAgeMeasure" : {}
-            },
-            "required" : [ "nc:PersonFullName" ]
-        }
+            "allOf" : [
+                { "$ref" : "#/definitions/nc:ConveyanceType" },
+                { "properties" : [
+                    "nc:VehicleMake" : { "$ref" : "#/properties/nc:VehicleMake" },
+                    "nc:VehicleSeatingQuantity" : { "$ref" : "#/properties/nc:VehicleSeatingQuantity" }]}]
+        },
+        "nc:ConveyanceType" : {
+            "type" : "object",
+            "allOf" : [
+                { "$ref" : "#/definitions/nc:ItemType" },
+                { "properties" : [
+                    "j:VehicleUseANSID20Code" : { "$ref" : "#/properties/j:VehicleUseANSID20Code" },
+                    "nc:ConveyanceUseText" : { "$ref" : "#/properties/nc:ConveyanceUseText" },
+                    "nc:VehicleSeatingQuantity" : { "$ref" : "#/properties/nc:VehicleSeatingQuantity" }]}]
+        },
+        "iso_4217:CurrencyCodeType" : {},
     },
     "type" : "object",
     "additionalProperties" : false,
-    "properties" : {
-        "@context" : "context.jsonld",
-        "nc:Vehicle" : { "$ref" : "#/definitions/nc:VehicleType" },
-        "Derived" : { "$ref" : "#/definitions/DerivedType" }
-    }
 }

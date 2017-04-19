@@ -44,6 +44,11 @@ that defines a property as a single value **or** an array of values.
 Any other cardinality would be done locally, within a type, and might express
 cardinality of an element within that type.
 
+#### "definitions" of the top-level JSON Schema object
+
+The "definitions" in the top-level JSON Schema object contains type definitions
+for all the types in the subset.
+
 ### Element declarations
 
 Element declarations are done by setting values for "properties" in a JSON schema object. 
@@ -60,3 +65,25 @@ abstract elements.
 Include any substitutable elements in addition to the base element (the
 "substitution group head").
 
+## Element occurrences
+
+### Elements with substitutions and abstracts
+
+Include the full cardinality for every element that can appear in the element
+occurrence. Omit any elements that are abstract.
+
+### Cardinality (0,n)
+
+Reference the declaration in the top-level JSON object's "properties" entry.
+
+### Cardinality (0,1)
+
+TBD if we have to cover this case.
+
+### Cardinality (1,1)
+
+TBD if we have to cover this case.
+
+### Cardinality (1,n)
+
+TBD if we have to cover this case.

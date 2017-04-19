@@ -26,7 +26,7 @@
     <xs:complexContent>
       <xs:extension base="nc:ItemType">
         <xs:sequence>
-          <xs:element ref="nc:ConveyanceUse" minOccurs="1" maxOccurs="1"/>
+          <xs:element ref="nc:ConveyanceUse" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -54,6 +54,14 @@
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="TextType">
+    <xs:annotation>
+      <xs:documentation>A data type for a character string.</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="niem-xs:string"/>
+    </xs:simpleContent>
   </xs:complexType>
   <xs:complexType name="VehicleType">
     <xs:annotation>
@@ -111,6 +119,11 @@
   <xs:element name="VehicleSeatingQuantity" type="niem-xs:nonNegativeInteger" nillable="true">
     <xs:annotation>
       <xs:documentation>A total number of seats available in a vehicle.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="VehicleUseText" type="nc:TextType" substitutionGroup="nc:ConveyanceUse" nillable="true">
+    <xs:annotation>
+      <xs:documentation>A manner or way in which a vehicle is used.</xs:documentation>
     </xs:annotation>
   </xs:element>
 </xs:schema>

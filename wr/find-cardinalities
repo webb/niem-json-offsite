@@ -1,0 +1,16 @@
+#!/bin/bash
+
+{
+while read -r -d $'\n'
+do
+    case $REPLY in
+        */external/* \
+            | */localTerminology/* \
+            | */appinfo/* \
+            | */conformanceTargets/* ) true;;
+        * ) echo "$REPLY" >&2
+            saxon -x find-cardinalities.xsl -i $REPLY
+    esac
+done < <(find ~/r/niem/release/distro -type f -name '*.xsd')
+} | sort -u
+
