@@ -1,0 +1,18 @@
+{
+  "$schema" : "http://json-schema.org/draft-04/schema#",
+  "properties" : {
+{http://release.niem.gov/niem/niem-core/3.0/}ItemCategory, {http://release.niem.gov/niem/domains/jxdm/5.2/}ArtObjectCategoryCode, {http://release.niem.gov/niem/domains/jxdm/5.2/}AudioVisualRecordingCategoryCode, {http://release.niem.gov/niem/domains/jxdm/5.2/}BicycleCategoryCode, {http://release.niem.gov/niem/domains/jxdm/5.2/}ClothingCategoryCode, {http://release.niem.gov/niem/domains/jxdm/5.2/}ComputerHardwareSoftwareCategoryCode, {http://release.niem.gov/niem/domains/jxdm/5.2/}ConstructionMaterialCategoryCode, {http://release.niem.gov/niem/domains/jxdm/5.2/}ConsumableGoodsCategoryCode, {http://release.niem.gov/niem/domains/jxdm/5.2/}CreditBankIDCardCategoryCode, {http://release.niem.gov/niem/domains/jxdm/5.2/}DrillingEquipmentCategoryCode, {http://release.niem.gov/niem/domains/jxdm/5.2/}EntertainmentDeviceCategoryCode, {http://release.niem.gov/niem/domains/jxdm/5.2/}GamblingEquipmentCategoryCode, {http://release.niem.gov/niem/domains/jxdm/5.2/}GrainCategoryCode, {http://release.niem.gov/niem/domains/jxdm/5.2/}HouseholdFurnishingsCategoryCode, {http://release.niem.gov/niem/domains/jxdm/5.2/}HousewaresCategoryCode, {http://release.niem.gov/niem/domains/jxdm/5.2/}ItemCategoryNCICTYPACode, {http://release.niem.gov/niem/domains/jxdm/5.2/}ItemCategoryNCICTYPCode, {http://release.niem.gov/niem/domains/jxdm/5.2/}ItemCategoryNIBRSCode, {http://release.niem.gov/niem/domains/jxdm/5.2/}ItemCategoryNIBRSPropertyCategoryCode, {http://release.niem.gov/niem/domains/jxdm/5.2/}ItemPropertyCategoryFBICode, {http://release.niem.gov/niem/domains/jxdm/5.2/}KeepsakeCategoryCode, {http://release.niem.gov/niem/domains/jxdm/5.2/}KnifeCategoryCode, {http://release.niem.gov/niem/domains/jxdm/5.2/}LivestockCategoryCode, {http://release.niem.gov/niem/domains/jxdm/5.2/}MusicalInstrumentCategoryCode, {http://release.niem.gov/niem/domains/jxdm/5.2/}OfficeEquipmentCategoryCode, {http://release.niem.gov/niem/domains/jxdm/5.2/}OpticalEquipmentCategoryCode, {http://release.niem.gov/niem/domains/jxdm/5.2/}PhotoEquipmentCategoryCode, {http://release.niem.gov/niem/domains/jxdm/5.2/}ServiceUtilityCategoryCode, {http://release.niem.gov/niem/domains/jxdm/5.2/}SportsEquipmentCategoryCode, {http://release.niem.gov/niem/domains/jxdm/5.2/}ToolDeviceCategoryCode, {http://release.niem.gov/niem/niem-core/3.0/}ConveyanceCategoryCode, {http://release.niem.gov/niem/niem-core/3.0/}ElectronicEquipmentCategoryCode, {http://release.niem.gov/niem/niem-core/3.0/}ElectronicInstrumentCategoryCode, {http://release.niem.gov/niem/niem-core/3.0/}ItemCategoryText, {http://release.niem.gov/niem/niem-core/3.0/}MachineryCategoryCode
+  }
+  "definitions" : {
+      "_not_in_subset" : {
+          "title" : "Property not included in the subset",
+          "description" : "The property that referenced this definition is not included in the subset. If you wish to use this property, add the property to the subset and generate a new JSON Schema."
+          "type" : "null"
+      }
+      "_property_is_placeholder" : {
+          "title" : "Property is a placeholder"
+          "description" : "The property is a placeholder, which is not allowed to occur in a JSON document. It appears in this schema for documentation purposes, to help the reader understand a core concept on which a concrete property is based."
+          "type" : "null"
+      }
+  }
+}
