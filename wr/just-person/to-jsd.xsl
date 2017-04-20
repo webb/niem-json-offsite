@@ -10,6 +10,8 @@
 
   <output method="text"/>
 
+  <variable name="xs_string" as="xs:QName" select="xs:QName('xs:string')"/>
+
   <variable name="context" as="element(data:mapping)+">
     <data:mapping prefix="nc" namespace="http://release.niem.gov/niem/niem-core/3.0/"/>
     <data:mapping prefix="j" namespace="http://release.niem.gov/niem/domains/jxdm/5.2/"/>
@@ -59,6 +61,22 @@
     <sequence select="exactly-one(
                         f:resolve-namespace(namespace-uri-from-QName($element-qname))
                           //xs:element[@name eq local-name-from-QName($element-qname)])"/>
+  </function>
+
+  <!-- return simpletype or complextype for a given type name, or () if it's an xs:* type -->
+  <function name="f:resolve-type" as="element()?">
+    <param name="type-qname" as="xs:QName"/>
+    <choose>
+      <when test="$xs_string = QName(namespace-uri-from-QName($type-qname), 'string')"/>
+      <otherwise>
+        <variable name="schema" as="document-node(element(xs:schema))"
+                  select="f:resolve-namespace(namespace-uri-from-QName($type-qname))"/>
+        <sequence
+          select="exactly-one(
+                  $schema/xs:schema/xs:complexType[@name = local-name-from-QName($type-qname)]
+                  | $schema/xs:schema/xs:simpleType[@name = local-name-from-QName($type-qname)])"/>
+      </otherwise>
+    </choose>
   </function>
   
   <variable name="substitutions" select="f:get-all-substitutions(/)"/>
@@ -146,30 +164,83 @@
     </value-of>
   </function>
 
+  <function name="f:get-element-declaration">
+    <param name="element-qname" as="xs:QName"/>
+    <variable name="element-decl" select="f:resolve-element($element-qname)"/>
+    <value-of select="f:quote(f:to-qname($element-qname))"/>
+    <text> : {&#10;</text>
+    <value-of select="f:get-description($element-decl)"/>
+    <choose>
+      <when test="empty($element-decl/@abstract) and exists($element-decl/@type)">
+        <text>"oneOf" : [&#10;</text>
+        <text>{ </text>
+        <value-of select="f:get-definition-ref($element-decl)"/>
+        <text>}&#10;</text>
+        <text>{ type : array&#10;</text>
+        <text>items : { </text>
+        <value-of select="f:get-definition-ref($element-decl)"/>
+        <text>}}]&#10;</text>
+      </when>
+      <otherwise>"$ref" : "#/definitions/_property_is_placeholder"&#10;</otherwise>
+    </choose>
+    <text>}&#10;</text>
+  </function>
+
+  <function name="f:get-type-of-element" as="xs:QName?">
+    <param name="element-qname" as="xs:QName"/>
+    <variable name="element-decl" as="element(xs:element)"
+              select="f:resolve-element($element-qname)"/>
+    <if test="$element-decl/@type">
+      <sequence select="resolve-QName($element-decl/@type, $element-decl)"/>
+    </if>
+  </function>
+
+  <function name="f:type-get-immediate-base-type" as="xs:QName?">
+    <param name="type-qname" as="xs:QName"/>
+    <variable name="type-decl" as="element()?" select="f:resolve-type($type-qname)"/>
+    <choose>
+      <when test="empty($type-decl)"/>
+      <when test="exactly-one($type-decl/self::xs:complexType/xs:complexContent/xs:extension
+                  /@base)">
+        <variable name="extension" as="element(xs:extension)"
+                  select="$type-decl/self::xs:complexType/xs:complexContent/xs:extension[@base]"/>
+        <sequence select="resolve-QName($extension/@base, $extension)"/>
+      </when>
+      <otherwise>
+        <message terminate="yes">
+          <text>Unknown type structure: </text>
+          <value-of select="name($type-decl)"/>
+          <text> </text>
+          <value-of select="f:to-clark-name(
+                            QName(
+                              $type-decl/ancestor::xs:schema/@targetNamespace,
+                              $type-decl/@name))"/>
+        </message>
+      </otherwise>
+    </choose>
+  </function>
+
+  <function name="f:get-closure-of-types" as="xs:QName*">
+    <param name="type-qnames" as="xs:QName*"/>
+    <choose>
+      <when test="empty($type-qnames)"/>
+      <otherwise>
+        <variable name="base-type" as="xs:QName"
+                  select="f:type-get-immediate-base-type($type-qnames[1])"/>
+        <sequence select="distinct-values( ($type-qnames[1],
+                            $base-type,
+                            f:get-closure-of-types(subsequence($type-qnames, 2))))"/>
+      </otherwise>
+    </choose>
+  </function>
+
   <template match="/">
     <text>{
   "$schema" : "http://json-schema.org/draft-04/schema#",
   "properties" : {&#10;</text>
 
     <for-each select="$picked-elements">
-      <variable name="element-decl" select="f:resolve-element(.)"/>
-      <value-of select="f:quote(f:to-qname(.))"/>
-      <text> : {&#10;</text>
-      <value-of select="f:get-description($element-decl)"/>
-      <choose>
-        <when test="empty($element-decl/@abstract) and exists($element-decl/@type)">
-          <text>"oneOf" : [&#10;</text>
-          <text>{ </text>
-          <value-of select="f:get-definition-ref($element-decl)"/>
-          <text>}&#10;</text>
-          <text>{ type : array&#10;</text>
-          <text>items : { </text>
-          <value-of select="f:get-definition-ref($element-decl)"/>
-          <text>}}]&#10;</text>
-        </when>
-        <otherwise>"$ref" : "#/definitions/_property_is_placeholder"&#10;</otherwise>
-      </choose>
-      <text>}&#10;</text>
+      <value-of select="f:get-element-declaration(.)"/>
     </for-each>
       
     <text>  }
@@ -204,7 +275,34 @@
             }
         }
   }
-}&#10;</text>
+      }&#10;</text>
+    <text>ok</text>
+    <message>
+      <text>picked elements:</text>
+      <value-of select="string-join(
+                          for $element in $picked-elements
+                          return f:to-clark-name($element),
+                          ', ')"/>
+    </message>
+    <message>
+      <text>types:</text>
+      <value-of select="string-join(
+                          for $element in $picked-elements,
+                              $type in f:get-type-of-element($element)
+                          return f:to-clark-name($type),
+                          ', ')"/>
+    </message>
+    <message>
+      <text>all types</text>
+      <value-of select="string-join(
+                          for $type 
+                          in f:get-closure-of-types(
+                               for $element in $picked-elements
+                               return f:get-type-of-element($element))
+                          return f:to-clark-name($type),
+                          ', ')"/>
+    </message>
+    <text>yep</text>
   </template>
 
 </stylesheet>

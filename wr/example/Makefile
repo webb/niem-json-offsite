@@ -10,7 +10,7 @@ default: ${jsd} ${instance} valid
 valid: ${instance:%.json=tmp/valid/%.json}
 
 tmp/valid/%.json: %.json niem.jsd
-	ajv -s niem.jsd -d $<
+	ajv -s niem.jsd -d $< --all-errors --json-pointers
 	mkdir -p ${dir $@} && touch $@
 
 %.jsd: %.jsd.hjson

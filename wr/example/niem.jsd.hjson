@@ -47,12 +47,20 @@
         "structures:ObjectType" : {
             type : object
             patternProperties : {
-                "^ism:.*" : { type : string }
-                "^ntk:.*" : { type : string }
+                "^ism:.*" : {
+                    type : string
+                }
+                "^ntk:.*" : {
+                    type : string
+                }
             }
             properties : {
-                "@id" : { format : uriref }
-                "@base" : { format : uriref } 
+                "@id" : {
+                    format : uriref
+                }
+                "@base" : {
+                    format : uriref
+                }
             }
         }
         "nc:AmountType" : {

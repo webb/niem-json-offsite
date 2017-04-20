@@ -51,4 +51,5 @@ items : { "$ref" : "#/definitions/nc:VehicleType"}}]
             }
         }
   }
-}
+      }
+okyep

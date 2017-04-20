@@ -49,6 +49,52 @@ cardinality of an element within that type.
 The "definitions" in the top-level JSON Schema object contains type definitions
 for all the types in the subset.
 
+##### Definition `_not_in_subset`
+
+```json
+"_not_in_subset": {
+  "title": "Property not included in the subset",
+  "description": "The property that referenced this definition is not included in the subset. If you wish to use this property, add the property to the subset and generate a new JSON Schema.",
+  "type": "null"
+},
+```
+
+##### Definition `_property_is_placeholder`
+
+```json
+"_property_is_placeholder": {
+  "title": "Property is a placeholder",
+  "description": "The property is a placeholder that represents a concept. It is not allowed to occur in a JSON document. It may be replaced by another property that implements this concept. Each replacement property's description says what it may replace."
+  "type": "null"
+}
+```
+
+##### Definition `_base`
+
+Things will reference this as `#/definitions/_base`
+
+```json
+"_base": {
+  "type": "object",
+  "patternProperties": {
+    "^ism:.*": {
+      "type": "string"
+    },
+    "^ntk:.*": {
+      "type": "string"
+    }
+  },
+  "properties": {
+    "@id": {
+      "format": "uriref"
+    },
+    "@base": {
+      "format": "uriref"
+    }
+  }
+}
+```
+
 ### Documented enumerations
 
 Enumerations may be documented in JSON Schema by combining "oneOf" and single-item "enum" keywords.
@@ -103,3 +149,36 @@ TBD if we have to cover this case.
 ### Cardinality (1,n)
 
 TBD if we have to cover this case.
+
+## Base types
+
+### `structures:ObjectType`, `structures:AssociationType`, `structures:SimpleObjectAttributeGroup`
+
+The base components at the root of the NIEM type hierarchy are all accommodated
+by the `_base` definition at the top level. For example:
+
+```json
+"nc:AmountType" : {
+    description : "A data type for an amount of money."
+    allOf : [
+        { "$ref" : "#/definitions/_base" }
+        { type : object
+          "properties" : {
+              "nc:Amount" : {
+                  description: "An amount of money."
+                  "$ref" : "#/definitions/_not_in_subset"
+              },
+              "nc:Currency" : {
+                  description: "A data concept for a unit of money or exchange."
+                  "$ref" : "#/definitions/_element_is_abstract"
+              }
+              "nc:CurrencyCode" : {
+                  description: "A unit of money or exchange. Appears as a substitution for nc:Currency."
+                  "$ref" : "#/properties/nc:CurrencyCode"
+              }
+          }
+        }
+    ]
+},
+
+```
