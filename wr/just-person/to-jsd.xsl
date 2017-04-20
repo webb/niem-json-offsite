@@ -16,7 +16,9 @@
   </variable>
 
   <variable name="picked-elements" as="xs:QName*"
-            select="xs:QName('nc:Person'), xs:QName('nc:Vehicle')"/>
+            select="xs:QName('nc:Person'), 
+                    xs:QName('nc:Vehicle'), 
+                    xs:QName('nc:ItemCategory')"/>
 
   <function name="f:get-prefix" as="xs:string">
     <param name="namespace-uri" as="xs:string"/>
@@ -50,6 +52,13 @@
       </message>
     </if>
     <sequence select="doc($resolved-uri)"/>
+  </function>
+
+  <function name="f:resolve-element" as="element(xs:element)">
+    <param name="element-qname" as="xs:QName"/>
+    <sequence select="exactly-one(
+                        f:resolve-namespace(namespace-uri-from-QName($element-qname))
+                          //xs:element[@name eq local-name-from-QName($element-qname)])"/>
   </function>
   
   <variable name="substitutions" select="f:get-all-substitutions(/)"/>
@@ -117,14 +126,50 @@
     <value-of select="concat('&quot;', $string, '&quot;')"/>
   </function>
 
+  <function name="f:get-description" as="xs:string">
+    <param name="component" as="element()"/>
+    <value-of>
+      <text>"description" : &quot;</text>
+      <value-of select="exactly-one($component/xs:annotation/xs:documentation[1])"/>
+      <text>&quot;&#10;</text>
+    </value-of>
+  </function>
+
+  <function name="f:get-definition-ref" as="xs:string">
+    <param name="element-decl" as="element(xs:element)"/>
+    <variable name="type" as="xs:string"
+              select="f:to-qname(resolve-QName($element-decl/@type, $element-decl))"/>
+    <value-of>
+      <text>"$ref" : &quot;#/definitions/</text>
+      <value-of select="$type"/>
+      <text>&quot;</text>
+    </value-of>
+  </function>
+
   <template match="/">
     <text>{
   "$schema" : "http://json-schema.org/draft-04/schema#",
   "properties" : {&#10;</text>
 
     <for-each select="$picked-elements">
+      <variable name="element-decl" select="f:resolve-element(.)"/>
       <value-of select="f:quote(f:to-qname(.))"/>
-      <text> : { }&#10;</text>
+      <text> : {&#10;</text>
+      <value-of select="f:get-description($element-decl)"/>
+      <choose>
+        <when test="empty($element-decl/@abstract) and exists($element-decl/@type)">
+          <text>"oneOf" : [&#10;</text>
+          <text>{ </text>
+          <value-of select="f:get-definition-ref($element-decl)"/>
+          <text>}&#10;</text>
+          <text>{ type : array&#10;</text>
+          <text>items : { </text>
+          <value-of select="f:get-definition-ref($element-decl)"/>
+          <text>}}]&#10;</text>
+        </when>
+        <otherwise>"$ref" : "#/definitions/_property_is_placeholder"&#10;</otherwise>
+      </choose>
+      <text>}&#10;</text>
     </for-each>
       
     <text>  }
@@ -139,6 +184,25 @@
           "description" : "The property is a placeholder, which is not allowed to occur in a JSON document. It appears in this schema for documentation purposes, to help the reader understand a core concept on which a concrete property is based."
           "type" : "null"
       }
+      "structures:ObjectType" : {
+        type : object
+        patternProperties : {
+          "^ism:.*" : {
+      type : string
+      }
+      "^ntk:.*" : {
+      type : string
+      }
+      }
+            properties : {
+      "@id" : {
+      format : uriref
+      }
+      "@base" : {
+      format : uriref
+      } 
+            }
+        }
   }
 }&#10;</text>
   </template>

@@ -1,8 +1,24 @@
 {
   "$schema" : "http://json-schema.org/draft-04/schema#",
   "properties" : {
-"nc:Person" : { }
-"nc:Vehicle" : { }
+"nc:Person" : {
+"description" : "A human being."
+"oneOf" : [
+{ "$ref" : "#/definitions/nc:PersonType"}
+{ type : array
+items : { "$ref" : "#/definitions/nc:PersonType"}}]
+}
+"nc:Vehicle" : {
+"description" : "A conveyance designed to carry an operator, passengers and/or cargo, over land."
+"oneOf" : [
+{ "$ref" : "#/definitions/nc:VehicleType"}
+{ type : array
+items : { "$ref" : "#/definitions/nc:VehicleType"}}]
+}
+"nc:ItemCategory" : {
+"description" : "A data concept for a kind of item."
+"$ref" : "#/definitions/_property_is_placeholder"
+}
   }
   "definitions" : {
       "_not_in_subset" : {
@@ -15,5 +31,24 @@
           "description" : "The property is a placeholder, which is not allowed to occur in a JSON document. It appears in this schema for documentation purposes, to help the reader understand a core concept on which a concrete property is based."
           "type" : "null"
       }
+      "structures:ObjectType" : {
+        type : object
+        patternProperties : {
+          "^ism:.*" : {
+      type : string
+      }
+      "^ntk:.*" : {
+      type : string
+      }
+      }
+            properties : {
+      "@id" : {
+      format : uriref
+      }
+      "@base" : {
+      format : uriref
+      } 
+            }
+        }
   }
 }
