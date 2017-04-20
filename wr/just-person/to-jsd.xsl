@@ -2,14 +2,39 @@
 <stylesheet 
   version="2.0"
   xmlns:catalog="urn:oasis:names:tc:entity:xmlns:xml:catalog"
-  xmlns:f="http://example.org/functions"
+  xmlns:data="http://example.org/data"
+  xmlns:f="http://example.org/local"
   xmlns:nc="http://release.niem.gov/niem/niem-core/3.0/"
-  xmlns:subst="http://example.org/substitutions"
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns="http://www.w3.org/1999/XSL/Transform">
 
   <output method="text"/>
 
+  <variable name="context" as="element(data:mapping)+">
+    <data:mapping prefix="nc" namespace="http://release.niem.gov/niem/niem-core/3.0/"/>
+    <data:mapping prefix="j" namespace="http://release.niem.gov/niem/domains/jxdm/5.2/"/>
+  </variable>
+
+  <variable name="picked-elements" as="xs:QName*"
+            select="xs:QName('nc:Person'), xs:QName('nc:Vehicle')"/>
+
+  <function name="f:get-prefix" as="xs:string">
+    <param name="namespace-uri" as="xs:string"/>
+    <variable name="mappings" as="element(data:mapping)*"
+              select="$context[@namespace = $namespace-uri]"/>
+    <choose>
+      <when test="count($mappings) = 0">
+        <message terminate="yes">No context mapping found for namespace <value-of select="$namespace-uri"/>.</message>
+      </when>
+      <when test="count($mappings) gt 1">
+        <message terminate="yes">Too many context mappings found for namespace <value-of select="$namespace-uri"/>.</message>
+      </when>
+      <otherwise>
+        <value-of select="exactly-one($mappings)/@prefix"/>
+      </otherwise>
+    </choose>
+  </function>
+  
   <variable name="catalog" as="document-node(element(catalog:catalog))" select="/"/>
 
   <function name="f:resolve-namespace" as="document-node(element(xs:schema))">
@@ -29,7 +54,7 @@
   
   <variable name="substitutions" select="f:get-all-substitutions(/)"/>
 
-  <function name="f:get-all-substitutions" as="element(subst:subst)+">
+  <function name="f:get-all-substitutions" as="element(data:subst)+">
     <param name="catalog-root" as="document-node(element(catalog:catalog))"/>
     <for-each select="$catalog/catalog:catalog/catalog:uri/@name">
       <for-each select="f:resolve-namespace(.)">
@@ -38,7 +63,7 @@
                     select="QName(ancestor::xs:schema/@targetNamespace, @name)"/>
           <variable name="base" as="xs:QName"
                     select="resolve-QName(@substitutionGroup, .)"/>
-          <subst:subst
+          <data:subst
             derived-namespace="{namespace-uri-from-QName($derived)}"
             derived-local-name="{local-name-from-QName($derived)}"
             base-namespace="{namespace-uri-from-QName($base)}"
@@ -81,13 +106,26 @@
                       '}', local-name-from-QName($qname))"/>
   </function>
 
+  <function name="f:to-qname" as="xs:string">
+    <param name="qname" as="xs:QName"/>
+    <value-of select="concat(f:get-prefix(namespace-uri-from-QName($qname)), ':',
+                      local-name-from-QName($qname))"/>
+  </function>
+
+  <function name="f:quote" as="xs:string">
+    <param name="string" as="xs:string"/>
+    <value-of select="concat('&quot;', $string, '&quot;')"/>
+  </function>
+
   <template match="/">
     <text>{
   "$schema" : "http://json-schema.org/draft-04/schema#",
   "properties" : {&#10;</text>
 
-    <value-of select="string-join(for $s in f:get-substitutions(xs:QName('nc:ItemCategory')) return f:to-clark-name($s), ', ')"/>
-    <text>&#10;</text>
+    <for-each select="$picked-elements">
+      <value-of select="f:quote(f:to-qname(.))"/>
+      <text> : { }&#10;</text>
+    </for-each>
       
     <text>  }
   "definitions" : {
