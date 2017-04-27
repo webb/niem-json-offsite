@@ -5,12 +5,11 @@
   xmlns:data="http://example.org/data"
   xmlns:f="http://example.org/local"
   xmlns:nc="http://release.niem.gov/niem/niem-core/3.0/"
+  xmlns:structures="http://release.niem.gov/niem/structures/3.0/"
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns="http://www.w3.org/1999/XSL/Transform">
 
   <output method="text"/>
-
-  <variable name="xs_string" as="xs:QName" select="xs:QName('xs:string')"/>
 
   <variable name="context" as="element(data:mapping)+">
     <data:mapping prefix="nc" namespace="http://release.niem.gov/niem/niem-core/3.0/"/>
@@ -63,11 +62,22 @@
                           //xs:element[@name eq local-name-from-QName($element-qname)])"/>
   </function>
 
+  <!-- Return true if the two QNames have the same namespace, false otherwise. 
+       Example: f:namespaces-equal($element-qname, xs:QName('xs:string'))
+       It's a shortcut so we can get leverage namespace declarations without defining 
+       variables -->
+       
+  <function name="f:namespaces-equal" as="xs:boolean">
+    <param name="lhs" as="xs:QName"/>
+    <param name="rhs" as="xs:QName"/>
+    <sequence select="namespace-uri-from-QName($lhs) eq namespace-uri-from-QName($rhs)"/>
+  </function>
+
   <!-- return simpletype or complextype for a given type name, or () if it's an xs:* type -->
   <function name="f:resolve-type" as="element()?">
     <param name="type-qname" as="xs:QName"/>
     <choose>
-      <when test="$xs_string = QName(namespace-uri-from-QName($type-qname), 'string')"/>
+      <when test="f:namespaces-equal($type-qname, xs:QName('xs:bogus'))"/>
       <otherwise>
         <variable name="schema" as="document-node(element(xs:schema))"
                   select="f:resolve-namespace(namespace-uri-from-QName($type-qname))"/>
@@ -273,36 +283,56 @@
       format : uriref
       } 
             }
-        }
-  }
       }&#10;</text>
-    <text>ok</text>
-    <message>
-      <text>picked elements:</text>
-      <value-of select="string-join(
-                          for $element in $picked-elements
-                          return f:to-clark-name($element),
-                          ', ')"/>
-    </message>
-    <message>
-      <text>types:</text>
-      <value-of select="string-join(
-                          for $element in $picked-elements,
-                              $type in f:get-type-of-element($element)
-                          return f:to-clark-name($type),
-                          ', ')"/>
-    </message>
-    <message>
-      <text>all types</text>
-      <value-of select="string-join(
-                          for $type 
-                          in f:get-closure-of-types(
-                               for $element in $picked-elements
-                               return f:get-type-of-element($element))
-                          return f:to-clark-name($type),
-                          ', ')"/>
-    </message>
-    <text>yep</text>
+
+    <for-each select="f:get-closure-of-types(
+                        for $element in $picked-elements
+                        return f:get-type-of-element($element))">
+      <choose>
+        <when test="f:namespaces-equal(., xs:QName('structures:bogus'))"/>
+        <otherwise>
+          <value-of select="f:quote(f:to-qname(.))"/>
+          <text> {&#10;</text>
+          <variable name="type-defn" as="element()" select="f:resolve-type(.)"/>
+          <variable name="base-type" as="xs:QName?"
+                    select="f:type-get-immediate-base-type(.)"/>
+          <choose>
+            <when test="$type-defn/self::xs:complexType">
+              <if test="exists($base-type)">
+                <text>"allOf" : [&#10;</text>
+                <text>{ "$ref" : &quot;#/definitions/</text>
+                <choose>
+                  <when test="f:namespaces-equal($base-type, xs:QName('structures:bogus'))">
+                    <text>_base&quot;</text>
+                  </when>
+                  <otherwise>
+                    <value-of select="f:to-qname($base-type)"/>
+                    <text>&quot;</text>
+                  </otherwise>
+                </choose>
+                <text> }&#10;</text>
+                <text>{ </text>
+              </if>
+              <text>type: object&#10;</text>
+              <if test="exists($base-type)">
+                <text>}&#10;</text>
+                <text>]&#10;</text>
+              </if>
+            </when>
+            <otherwise>
+              <message terminate="yes">
+                <text>in generating definitions, not prepared for type </text>
+                <value-of select="f:to-clark-name(.)"/>
+              </message>
+            </otherwise>
+          </choose>
+          <text>}&#10;</text>
+        </otherwise>
+      </choose>
+    </for-each>
+    
+    <text>}
+}&#10;</text>
   </template>
 
 </stylesheet>

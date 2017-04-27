@@ -1,0 +1,28 @@
+    <!--
+    <text>ok</text>
+    <message>
+      <text>picked elements:</text>
+      <value-of select="string-join(
+                          for $element in $picked-elements
+                          return f:to-clark-name($element),
+                          ', ')"/>
+    </message>
+    <message>
+      <text>types:</text>
+      <value-of select="string-join(
+                          for $element in $picked-elements,
+                              $type in f:get-type-of-element($element)
+                          return f:to-clark-name($type),
+                          ', ')"/>
+    </message>
+    <message>
+      <text>all types</text>
+      <value-of select="string-join(
+                          for $type 
+                          in f:get-closure-of-types(
+                               for $element in $picked-elements
+                               return f:get-type-of-element($element))
+                          return f:to-clark-name($type),
+                          ', ')"/>
+    </message>
+    <text>yep</text>

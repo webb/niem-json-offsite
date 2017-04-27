@@ -49,7 +49,27 @@ items : { "$ref" : "#/definitions/nc:VehicleType"}}]
       format : uriref
       } 
             }
-        }
-  }
       }
-okyep
+      "nc:PersonType" {
+          "allOf" : [
+              { "$ref" : "#/definitions/_base" }
+              { type: object
+              }
+          ]
+      }
+      "nc:VehicleType" {
+          "allOf" : [
+              { "$ref" : "#/definitions/nc:ConveyanceType" }
+              { type: object
+              }
+          ]
+      }
+      "nc:ConveyanceType" {
+          "allOf" : [
+              { "$ref" : "#/definitions/nc:ItemType" }
+              { type: object
+              }
+          ]
+      }
+  }
+}
