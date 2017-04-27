@@ -64,7 +64,7 @@ for all the types in the subset.
 ```json
 "_property_is_placeholder": {
   "title": "Property is a placeholder",
-  "description": "The property is a placeholder that represents a concept. It is not allowed to occur in a JSON document. It may be replaced by another property that implements this concept. Each replacement property's description says what it may replace."
+  "description": "The property is a placeholder that represents a concept. It is not allowed to occur in a JSON document. It may be replaced by another property that implements this concept. Each replacement property's description says what it may replace.",
   "type": "null"
 }
 ```
