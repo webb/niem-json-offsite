@@ -165,15 +165,15 @@ by the `_base` definition at the top level. For example:
         { type : object
           "properties" : {
               "nc:Amount" : {
-                  description: "An amount of money."
+                  description: "An amount of money.",
                   "$ref" : "#/definitions/_not_in_subset"
               },
               "nc:Currency" : {
-                  description: "A data concept for a unit of money or exchange."
-                  "$ref" : "#/definitions/_element_is_abstract"
+                  description: "A data concept for a unit of money or exchange.",
+                  "$ref" : "#/definitions/_property_is_placeholder"
               }
               "nc:CurrencyCode" : {
-                  description: "A unit of money or exchange. Appears as a substitution for nc:Currency."
+                  description: "A unit of money or exchange. Appears as a substitution for nc:Currency.",
                   "$ref" : "#/properties/nc:CurrencyCode"
               }
           }
