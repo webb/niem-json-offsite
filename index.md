@@ -185,26 +185,20 @@ by the `_base` definition at the top level. For example:
 ## Type definition that accommodates rdf:value
 
 ```
-    "iso_4217:CurrencyCodeType": {
-      "oneOf": [
+"iso_4217:CurrencyCodeType": {
+  "oneOf": [
+    { "$ref": "#/definitions/iso_4217:CurrencyCodeSimpleType" },
+    {
+      "allOf": [
+        { "$ref": "#/definitions/_base" },
         {
-          "$ref": "#/definitions/iso_4217:CurrencyCodeSimpleType"
-        },
-        {
-          "allOf": [
-            {
-              "$ref": "#/definitions/structures:ObjectType"
-            },
-            {
-              "type": "object",
-              "properties": {
-                "rdf:value": {
-                  "$ref": "#/definitions/iso_4217:CurrencyCodeSimpleType"
-                }
-              }
-            }
-          ]
+          "type": "object",
+          "properties": {
+            "rdf:value": { "$ref": "#/definitions/iso_4217:CurrencyCodeSimpleType" }
+          }
         }
       ]
-    },
+    }
+  ]
+}
 ```
