@@ -159,26 +159,52 @@ by the `_base` definition at the top level. For example:
 
 ```json
 "nc:AmountType" : {
-    description : "A data type for an amount of money."
-    allOf : [
-        { "$ref" : "#/definitions/_base" }
-        { type : object
+    "description" : "A data type for an amount of money.",
+    "allOf" : [
+        { "$ref" : "#/definitions/_base" },
+        { "type" : "object"
           "properties" : {
               "nc:Amount" : {
-                  description: "An amount of money.",
+                  "description": "An amount of money.",
                   "$ref" : "#/definitions/_not_in_subset"
               },
               "nc:Currency" : {
-                  description: "A data concept for a unit of money or exchange.",
+                  "description": "A data concept for a unit of money or exchange.",
                   "$ref" : "#/definitions/_property_is_placeholder"
-              }
+              },
               "nc:CurrencyCode" : {
-                  description: "A unit of money or exchange. Appears as a substitution for nc:Currency.",
+                  "description": "A unit of money or exchange. Appears as a substitution for nc:Currency.",
                   "$ref" : "#/properties/nc:CurrencyCode"
               }
           }
         }
     ]
-},
+}
+```
 
+## Type definition that accommodates rdf:value
+
+```
+    "iso_4217:CurrencyCodeType": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/iso_4217:CurrencyCodeSimpleType"
+        },
+        {
+          "allOf": [
+            {
+              "$ref": "#/definitions/structures:ObjectType"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "rdf:value": {
+                  "$ref": "#/definitions/iso_4217:CurrencyCodeSimpleType"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
 ```
